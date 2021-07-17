@@ -2,9 +2,14 @@ import { User } from './models/User';
 
 const user = new User({ name: 'Robbert', age: 36 });
 
-console.log(user.get('name'));
+user.on('change', () => {
+  console.log('c1');
+});
+user.on('change', () => {
+  console.log('c2');
+});
+user.on('asdf', () => {
+  console.log('this is a test');
+});
 
-user.set({ name: 'Rob' });
-
-console.log(user.get('name'));
-console.log(user.get('age'));
+user.trigger('asdf');
