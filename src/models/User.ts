@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { Eventing } from './Eventing';
 
 interface UserProps {
   id?: number;
@@ -6,14 +7,11 @@ interface UserProps {
   age?: number;
 }
 
-
-
 export class User {
+  private id = this.get('id');
+  private url = 'http://localhost:3000';
 
-  id =  this.get('id')
-  url = 'http://localhost:3000';
-
-  
+  public events: Eventing = new Eventing();
 
   constructor(private data: UserProps) {}
 
@@ -25,9 +23,6 @@ export class User {
     Object.assign(this.data, update);
   }
 
- 
-  
-
   fetch(): void {
     axios
       .get(`${this.url}/users/${this.id}`)
@@ -37,13 +32,10 @@ export class User {
   }
 
   save(): void {
-    
-    if (this.get('id')){
-      
-      axios.put(`${this.url}/users/${this.id}`, this.data)
+    if (this.get('id')) {
+      axios.put(`${this.url}/users/${this.id}`, this.data);
     } else {
-      axios.post(`${this.url}/users`,this.data)
-      
+      axios.post(`${this.url}/users`, this.data);
     }
   }
 }
