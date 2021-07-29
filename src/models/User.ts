@@ -1,5 +1,6 @@
 
 import { Eventing } from './Eventing';
+import { Sync } from './Sync';
 
 export interface UserProps {
   id?: number;
@@ -7,20 +8,13 @@ export interface UserProps {
   age?: number;
 }
 
+const rootUrl = 'http://localhost:3000/users'
+
 export class User {
-  
+    public events: Eventing = new Eventing();
+    public sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
 
-  public events: Eventing = new Eventing();
-
-  constructor(private data: UserProps) {}
-
-  get<K extends keyof UserProps>(propName: K): number | string | undefined {
-    return this.data[propName];
-  }
-
-  set(update: UserProps): void {
-    Object.assign(this.data, update);
-  }
+ 
 
   
 
